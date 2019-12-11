@@ -52,7 +52,7 @@ public class commonUtils {
 			ExpectedCondition<Boolean> angularLoad = new ExpectedCondition<Boolean>() {
 
 				public Boolean apply(WebDriver driver) {
-					return (boolean) ((JavascriptExecutor) driver).executeScript(
+					return (Boolean) ((JavascriptExecutor) driver).executeScript(
 							"return angular.element(document).injector().get('$http').pendingRequests.length === 0");
 				}
 			};
