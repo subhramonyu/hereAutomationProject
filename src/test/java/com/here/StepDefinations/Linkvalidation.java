@@ -26,22 +26,26 @@ public class Linkvalidation {
 
 	@When("^Get All the links of the page$")
 	public void getAllLinks() throws Throwable {
-
-		List<WebElement> allLinks = Driver.getDriver().findElements(By.tagName("a"));
+		//Incorporated NitinComments,Using Xpath for fetching links
+		List<WebElement> allLinks = Driver.getDriver().findElements(By.xpath("//a"));
 		for (WebElement link : allLinks) {
 			linkList.add(link.getAttribute("href"));
-
+			
 		}
 
 	}
 
 	@Then("^Navigate all the link and wait till it loads and AngularJS is initialized$")
 	public void navigateToAllLink() throws Throwable {
+		System.out.println(linkList);
 		for (String link : linkList) {
 			if (link.contains("https")) {
 				Driver.getDriver().navigate().to(link);
 				commonUtils.waitForPageLoad(Driver.getDriver());
 				commonUtils.waitUntilAngularReady(Driver.getDriver());
+				////Incorporated NitinComments,checking for 200 response
+				commonUtils.getResponse(link);
+				
 			}
 		}
 	}

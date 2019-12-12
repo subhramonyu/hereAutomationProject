@@ -1,5 +1,10 @@
 package com.here.Utils;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -10,7 +15,6 @@ import com.here.settings.Driver;
 
 public class commonUtils {
 
-	
 	public static void waitForPageLoad(WebDriver driver) {
 		ExpectedCondition<Boolean> domLoad = new ExpectedCondition<Boolean>() {
 
@@ -73,4 +77,25 @@ public class commonUtils {
 		}
 	}
 
+	public static void getResponse(String url) throws IOException {
+
+		try {
+			HttpURLConnection connection = (HttpURLConnection) (new URL(url).openConnection());
+			
+			connection.setRequestMethod("HEAD");
+
+			connection.connect();
+
+			if (connection.getResponseCode() == 200) {
+				System.out.println(url + " is a valid link");
+			} else {
+				System.out.println(url + " is a broken link");
+			}
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+		}
+
+	}
 }
